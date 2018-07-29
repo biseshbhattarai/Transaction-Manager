@@ -1,0 +1,50 @@
+{% include 'shoptrans/snippets/navbar.html' %} {% block content %} 
+<br>
+<br>
+<style>
+    .primary{
+        color: lightgreen;
+    }
+    .danger{
+        color:red;
+    }
+    .tuna{
+        color:red;
+    }
+    .date-tuna{
+        color:lightgreen
+    }
+</style>
+
+<form method="GET" url = {% url 'main' %} >
+    <input type="text" placeholder="Search" value="{{request.GET.get}}" name="q" method="get">
+    <input type="submit" value="Submit">
+</form>
+
+<ul class="collection">
+    {% for obj in object_list %}
+    <li class="collection-item"><a href="{% url 'product' obj.pk %}">{{obj.product_name}}</a>
+        <!-- {% if not not_bought %}
+        <small class="date-tuna">Item added on stock  on : {{obj.created}}</small>
+        {% elif not_bought %}
+        <small class="date-tuna">Item last bought on : {{obj.modified}}</small>
+        {% endif %} -->
+    {% if obj.credit %}
+        <small class="primary">Payment on credit</small>
+    {% endif %}
+<!--     
+    {% if out_of_stock %}
+        <span class="tuna"><strong>OUT OF STOCK</strong></span>
+    {% endif %} -->
+        
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- <h2>{{user.username}}</h2> -->
+
+
+
+
+
+{% endblock %}

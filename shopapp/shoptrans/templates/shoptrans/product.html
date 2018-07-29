@@ -1,0 +1,47 @@
+<!-- {{sales}}
+{% if out_of_stock %}
+<p>Out of stock</p>
+{% else %}
+<a href="{% url  'update' product.pk %}">Update</a>
+{% endif %}
+<h2>Profit : {{profit}} %</h2> -->
+{% include 'shoptrans/snippets/navbar.html' %} {% block content %}
+<style>
+    .tuna{
+        color: red;
+    }
+    .bacon{
+        color: gold
+    }
+</style>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">{{product.product_name}}</span>
+                <span>Remaining stock : {{remaining_quantity}}</span>
+                {% if out_of_stock %}
+                <span class="tuna">Out of stock</span>
+                {% endif %}
+                
+                {% if not not_bought %}
+                    <small>Item added on stock on : {{product.created}}</small>
+                {% elif  not_bought%}
+                    <small>Item last bought on : {{product.modified}}</small>
+                    {% endif %}
+                    
+                <br>
+                <span class="bacon">Profit : {{profit}} %</span>
+            </div>
+            <div class="card-action">
+                {% if not out_of_stock %}
+                <a href="{% url 'update' product.pk %}">Update</a>
+
+                <a href="#">Delete</a>
+                {% endif %}
+                <a href="{% url 'main' %}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

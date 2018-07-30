@@ -36,10 +36,7 @@ def main(request):
     quantity = [product.quantity for product in Product.objects.all()]
     total_quantity = sum(quantity)
     print(total_quantity)
-    # for product in Product.objects.all():
-    #     out_of_stock = Product.remaining_stock(
-    #         product.no_of_sales, product.quantity)
-  
+   
   
     return render(request, 'shoptrans/main.html', {
         'products': products,

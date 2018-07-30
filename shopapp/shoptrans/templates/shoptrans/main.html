@@ -1,6 +1,6 @@
 {% include 'shoptrans/snippets/navbar.html' %} {% block content %} 
-<br>
-<br>
+
+
 <style>
     .primary{
         color: lightgreen;
@@ -14,16 +14,30 @@
     .date-tuna{
         color:lightgreen
     }
+    .button-tuna{
+        display: inline;
+    }
+    
 </style>
 
-<form method="GET" url = {% url 'main' %} >
+<form method="GET" url = {% url 'main' %} class="button-tuna">
     <input type="text" placeholder="Search" value="{{request.GET.get}}" name="q" method="get">
-    <input type="submit" value="Submit">
+    
+  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+
+  </button>
+
+
 </form>
+
+<br>
+<br>
+<br>
+<br>
 
 <ul class="collection">
     {% for obj in object_list %}
-    <li class="collection-item"><a href="{% url 'product' obj.pk %}">{{obj.product_name}}</a>
+    <li class="collection-item"><a href="{% url 'product' obj.pk %}"> *  {{obj.product_name}}</a>
         <!-- {% if not not_bought %}
         <small class="date-tuna">Item added on stock  on : {{obj.created}}</small>
         {% elif not_bought %}

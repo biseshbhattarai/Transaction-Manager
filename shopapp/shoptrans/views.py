@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from .models import Product, Capital, Categories
-from .serializer import ProductSerializer, CapitalSerializer, CategorySerializer
+from .models import Product, Capital, Categories, SingleDayTransaction
+from .serializer import ProductSerializer, CapitalSerializer, CategorySerializer, UserSerializer, SingleDayTransactionSerializer
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from rest_framework import generics
+from rest_framework import generics, filters
+from django.contrib.auth.models import User
 
 def main(request):
     capitals = Capital.objects.all()
@@ -131,9 +132,11 @@ def dashboard_view(request):
     return render(request, 'shoptrans/dashboard.html', context)
 
 
-class ProductApiView(generics.ListAPIView):
+class ProductApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('product_name',)
 
 
 class CapitalApiView(generics.ListAPIView):
@@ -147,3 +150,11 @@ class CategoryApiView(generics.ListAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class UserApiView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class SingleDayApiView(generics.ListCreateAPIView):
+    queryset = SingleDayTransaction.objects.all()
+    serializer_class = SingleDayTransactionSerializer

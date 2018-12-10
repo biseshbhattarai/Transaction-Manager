@@ -2,19 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
-# class Cost(models.Model):
-#     cost_amt = models.CharField(max_length=22222)
-#     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return self.cost_amt
-
-# class Sales(models.Model):
-#     sales_amt = models.CharField(max_length=22222)
-    
-
-#     def __str__(self):
-#         return self.sales_amt
+import datetime
 
 class Categories(models.Model):
     category = models.CharField(max_length=222)
@@ -36,11 +24,11 @@ class Product(models.Model):
     bought = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    creditor_name = models.CharField(max_length=20000, default="No creditor", null=True )
 
     class Meta:
         get_latest_by = 'modified'
     
-    # no_of_credit = models.IntegerField(default=0)
     def __int__ (self):
         return int(self.quantity)
     
@@ -84,3 +72,10 @@ class Capital(models.Model):
 
     def remaining_capital(arg, value):
         return arg - value 
+
+class SingleDayTransaction(models.Model):
+    total_sales = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'hrllp'

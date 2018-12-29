@@ -137,7 +137,7 @@
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Product</label>
-                          <input type="text" class="form-control" v-model="product_name" id="exampleInputPassword1" placeholder="Cost amt...">
+                          <input type="text" class="form-control" v-model="product_name" id="exampleInputPassword1" placeholder="Product name....">
 
                           </div>
                         <div class="form-group">
@@ -333,6 +333,7 @@ export default {
       this.product.no_of_sales = null;
 
     },
+    // Search item based on keywords
     searchProduct : function() {
       axios.get('http://127.0.0.1:8000/products/?search=' + this.searchitem)
       .then(response => {response.data.forEach(data => {
@@ -358,6 +359,7 @@ export default {
 
 },
 
+
 updateItem : function(){
   if (this.updateItem != null){
       axios.get('http://127.0.0.1:8000/product/'+ this.updateItem)
@@ -366,6 +368,8 @@ updateItem : function(){
   }
 
 },
+
+// Fetches older days' transaction 
 fetchSingleData : function(){
   console.log('Sending.....')
   axios.get('http://127.0.0.1:8000/single/')
@@ -379,6 +383,10 @@ fetchSingleData : function(){
 
 },
 
+// Calculate present day transaction by subtracting yesterday's transaction from today's one
+
+
+// Close transaction and save the days' transactions in the database
 closeTransaction: function(){
   if (this.fetch_total_sales > this.today_sales){
     this.sales = this.fetch_total_sales - this.today_sales
@@ -394,10 +402,17 @@ console.log(this.sales)
       total_sales : this.sales
   })
   .then(response => {
-    alert('Transaction closed & saved')
-    
-  })
+     alert('Transaction closed & saved')
+     this.fetch_total_sales = this.old_data[this.old_data.length - 1].total_sales - this.fetch_total_sales
+     if (fetch_total_sales < 1){
+       this.fetch_total_sales = this.fetch_total_sales * -1
+     }
+     localStorage.setItem('total_sales', this.fetch_total_sales)
+
+
+    })
   .catch(err => {throw err})
+  
 
 
 }
@@ -406,6 +421,7 @@ console.log(this.sales)
     this.getCapital(),
     this.fetchUser(),
     this.fetchCategory(),
+    // Fetches total sales of the day 
     this.fetch_total_sales = localStorage.getItem('total_sales'),
     this.fetchSingleData()
   }

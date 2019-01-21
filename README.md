@@ -42,5 +42,5 @@ which must run all our services
 ## Contact 
 
 If any questions or ideas regarding any projects go to
-[Bisesh bhattarai] (http://biseshbhattarai.github.io)
-[Email] (http://emailbisesh.herokuapp.com)
+[Bisesh bhattarai](http://biseshbhattarai.github.io)
+[Email](http://emailbisesh.herokuapp.com)
